@@ -1,0 +1,9 @@
+Set up and run a Playwright Python scraper on Windows using uv (full path to uv.exe): delete .venv, install Python 3.12 with uv, create venv with 3.12, install playwright, install chromium, run scraper.py with uv run; if greenlet DLL fails try Python 3.11 or VC++ redistributable until scraper runs and output.json exists.
+
+Fix extract_entertainment_news for skeleton cards: after page.goto use wait_for_load_state networkidle; wait_for_selector ".category-inner-wrapper a[href]" timeout 30000; then wait_for_timeout 2000; query .category-inner-wrapper; title first from .category-description a; image from img.lazy get_attribute data-src or src; author from .author-name span with strip fallback; filter out articles where title is null or empty.
+
+Set entertainment category to the literal string मनोरञ्जन for every article (correct section label), remove the old JS evaluate category block.
+
+In extract_cartoon_of_the_day after finding cartoon_el, replace author extraction with selectors: .cartoon-description .author-name, .cartoon-description span, .author-name, .date — then post-process with splitlines and prefer lines that do not match regex digit for dates.
+
+Remove DEBUG blocks: both page.evaluate calls that collect all_classes and their print statements; keep other prints. Remove import sys and simplify _console_text to UTF-8 encode/decode only.
